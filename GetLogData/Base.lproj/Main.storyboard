@@ -684,7 +684,7 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="GetLogData" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl" customClass="ViewDropper">
+                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl" customClass="FileDragView" customModule="GetLogData" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -790,8 +790,8 @@
                     <connections>
                         <outlet property="LineName" destination="fo0-2v-2X1" id="zGh-lW-X07"/>
                         <outlet property="StationName" destination="HGp-gD-5rV" id="jWN-Xe-mis"/>
+                        <outlet property="dragView" destination="m2S-Jp-Qdl" id="3v8-SE-Veb"/>
                         <outlet property="folderPath" destination="OEB-nI-3Ey" id="0MI-8R-krA"/>
-                        <outlet property="viewDropper" destination="m2S-Jp-Qdl" id="vua-js-Vaw"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
