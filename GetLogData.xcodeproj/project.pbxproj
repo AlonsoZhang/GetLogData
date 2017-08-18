@@ -12,6 +12,7 @@
 		E20797811F46719A003F3202 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E20797801F46719A003F3202 /* Assets.xcassets */; };
 		E20797841F46719A003F3202 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E20797821F46719A003F3202 /* Main.storyboard */; };
 		E207978C1F467C5B003F3202 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E207978B1F467C5B003F3202 /* Config.plist */; };
+		E20797901F46C395003F3202 /* ViewDropper.m in Sources */ = {isa = PBXBuildFile; fileRef = E207978F1F46C395003F3202 /* ViewDropper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,9 @@
 		E20797831F46719A003F3202 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E20797851F46719A003F3202 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E207978B1F467C5B003F3202 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
+		E207978D1F46C395003F3202 /* GetLogData-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GetLogData-Bridging-Header.h"; sourceTree = "<group>"; };
+		E207978E1F46C395003F3202 /* ViewDropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewDropper.h; sourceTree = "<group>"; };
+		E207978F1F46C395003F3202 /* ViewDropper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewDropper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +60,13 @@
 			children = (
 				E207977C1F46719A003F3202 /* AppDelegate.swift */,
 				E207977E1F46719A003F3202 /* ViewController.swift */,
+				E207978E1F46C395003F3202 /* ViewDropper.h */,
+				E207978F1F46C395003F3202 /* ViewDropper.m */,
 				E20797801F46719A003F3202 /* Assets.xcassets */,
 				E20797821F46719A003F3202 /* Main.storyboard */,
 				E207978B1F467C5B003F3202 /* Config.plist */,
 				E20797851F46719A003F3202 /* Info.plist */,
+				E207978D1F46C395003F3202 /* GetLogData-Bridging-Header.h */,
 			);
 			path = GetLogData;
 			sourceTree = "<group>";
@@ -97,6 +104,7 @@
 					E20797781F46719A003F3202 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 8LP5KW6GHL;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -137,6 +145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E20797901F46C395003F3202 /* ViewDropper.m in Sources */,
 				E207977F1F46719A003F3202 /* ViewController.swift in Sources */,
 				E207977D1F46719A003F3202 /* AppDelegate.swift in Sources */,
 			);
@@ -252,12 +261,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8LP5KW6GHL;
 				INFOPLIST_FILE = GetLogData/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wistron.GetLogData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GetLogData/GetLogData-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -266,12 +278,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8LP5KW6GHL;
 				INFOPLIST_FILE = GetLogData/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wistron.GetLogData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GetLogData/GetLogData-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -295,6 +309,7 @@
 				E207978A1F46719A003F3202 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

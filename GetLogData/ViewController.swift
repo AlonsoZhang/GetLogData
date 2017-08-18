@@ -8,15 +8,18 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+class ViewController: NSViewController,DragLogDelegate {
     
     @IBOutlet weak var LineName: NSPopUpButton!
     @IBOutlet weak var StationName: NSPopUpButton!
+    @IBOutlet var viewDropper: ViewDropper!
+    @IBOutlet weak var folderPath: NSTextField!
     
     var ConfigPlist:NSDictionary = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewDropper.delegate = self
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
         print( (paths[0]))
         let file = Bundle.main.path(forResource:"Config", ofType: "plist")
@@ -33,7 +36,16 @@ class ViewController: NSViewController {
         
     }
     
-    
+    public func dragLog(_ files: [Any]!){
+        if files.count > 1 {
+            folderPath.textColor = NSColor.red
+            folderPath.stringValue = "Please drag one folder once !!!"
+        }else{
+            folderPath.textColor = NSColor.blue
+            let path = files[0]
+            folderPath.stringValue = "\(path)"
+        }
+    }
 
     override var representedObject: Any? {
         didSet {
