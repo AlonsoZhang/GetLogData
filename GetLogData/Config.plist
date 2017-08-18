@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllSations</key>
+	<dict>
+		<key>MLB</key>
+		<dict>
+			<key>RSW</key>
+			<string>AE-18</string>
+			<key>RCW</key>
+			<string>AE-19</string>
+			<key>IT-RS1</key>
+			<string>AE-20</string>
+			<key>IT-RS2</key>
+			<string>AE-21</string>
+			<key>Ringer Button Flex</key>
+			<string>SA-FLEX2</string>
+			<key>Cyclone Flex</key>
+			<string>SA-FLEX3</string>
+			<key>SMT-QT</key>
+			<string>GATEKEEPER-PREBURN</string>
+			<key>Sensor Flex</key>
+			<string>SA-SENSORFLEX</string>
+		</dict>
+		<key>CG </key>
+		<dict>
+			<key>MBA</key>
+			<string>AE-15</string>
+			<key>MBO</key>
+			<string>MBO</string>
+			<key>PFR</key>
+			<string>PVA</string>
+			<key>SA-IT-CG</key>
+			<string>AE-25</string>
+			<key>CG-SENSOR</key>
+			<string>CG-SENSOR</string>
+		</dict>
+		<key>HSG</key>
+		<dict>
+			<key>CIM</key>
+			<string>AE-28</string>
+			<key>MMV</key>
+			<string>MMV</string>
+			<key>DP2</key>
+			<string>AE-22</string>
+			<key>SMM</key>
+			<string>SMM</string>
+			<key>SA-IT-HSG1</key>
+			<string>AE-26</string>
+			<key>SA-IT-HSG2</key>
+			<string>AE-27</string>
+			<key>LBFW</key>
+			<string>AE-17</string>
+			<key>RBFW</key>
+			<string>AE-16</string>
+			<key>HSG-BUTTONFLEX</key>
+			<string>HSG-BUTTONFLEX</string>
+		</dict>
+		<key>Main</key>
+		<dict>
+			<key>RCAM</key>
+			<string>RCAM</string>
+			<key>Battery3in1</key>
+			<string>BATTERY-AND-VHB-INSTALL</string>
+			<key>CDP</key>
+			<string>AE-31</string>
+			<key>HDP</key>
+			<string>AE-32</string>
+			<key>AAA</key>
+			<string>AE-33</string>
+			<key>CGS</key>
+			<string>AE-34</string>
+		</dict>
+		<key>POST</key>
+		<dict>
+			<key>STOM</key>
+			<string>STOM</string>
+			<key>IT-CG</key>
+			<string>AE-36</string>
+			<key>IT-HSG1</key>
+			<string>AE-37</string>
+			<key>IT-HSG2</key>
+			<string>AE-38</string>
+			<key>IT-4</key>
+			<string>AE-39</string>
+			<key>LASER-ETCH</key>
+			<string>LASER-ETCH</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
