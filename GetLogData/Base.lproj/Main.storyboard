@@ -984,6 +984,7 @@
                         <outlet property="folderPath" destination="OEB-nI-3Ey" id="0MI-8R-krA"/>
                         <outlet property="include" destination="iY4-Sx-eA3" id="AeO-WG-PdW"/>
                         <outlet property="plist" destination="vMH-IZ-I7B" id="4AS-8A-WDB"/>
+                        <outlet property="saveBtn" destination="xQq-xr-6Fh" id="PDL-0w-z6L"/>
                         <outlet property="showInfo" destination="AK0-CB-0Gp" id="dUg-xi-Cf7"/>
                         <outlet property="start" destination="aW1-3y-fZg" id="9Y6-VY-uGg"/>
                     </connections>

@@ -21,10 +21,12 @@ class ViewController: NSViewController {
     @IBOutlet weak var start: NSTextField!
     @IBOutlet weak var end: NSTextField!
     @IBOutlet var showInfo: NSTextView!
+    @IBOutlet weak var saveBtn: NSButton!
     
-    var ConfigPlist:NSDictionary = [:]
-    var linenameDic:[String: Any] = [:]
-    var stationDic:[String: Any] = [:]
+    var ConfigPlist = [String: Any]()
+    var linenameDic = [String: Any]()
+    var stationDic = [String: Any]()
+    var file = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +35,8 @@ class ViewController: NSViewController {
         self.csv.state = 0
         let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true) as NSArray
         print(paths[0])
-        let file = Bundle.main.path(forResource:"Config", ofType: "plist")
-        ConfigPlist = NSDictionary(contentsOfFile: file!)!
+        file = Bundle.main.path(forResource:"Config", ofType: "plist")!
+        ConfigPlist = NSDictionary(contentsOfFile: file)! as! [String : Any]
         linenameDic = ConfigPlist["AllSations"] as! [String : Any]
         for linename in linenameDic.keys {
             LineName.addItem(withTitle: linename)
@@ -76,11 +78,7 @@ class ViewController: NSViewController {
             if (tmpData != nil) {
                 let content = String.init(data: tmpData! as Data, encoding: String.Encoding.utf8)
                 if (content != nil) {
-                    if (content?.contains("TestResult : PASS ;"))! {
-                        print(truepath)
-                    }else{
-                        print("fail")
-                    }
+                    dealwithlog(log: content!, path: logpath as! String)
                 }else{
                     showmessage(inputString: "No string: \(logpath)")
                 }
@@ -100,15 +98,22 @@ class ViewController: NSViewController {
     
     func clickStation() {
         stationDic = ConfigPlist["Stations"] as! [String : Any]
-        if stationDic[StationName.title] != nil{
-            let clickstationDic: [String: Any] = stationDic[StationName.title] as! [String : Any]
-            include.stringValue = (clickstationDic["IncludeString"] as? String ?? "")!
-            exclude.stringValue = (clickstationDic["ExcludeString"] as? String ?? "")!
-            start.stringValue = (clickstationDic["StartString"] as? String ?? "")!
-            end.stringValue = (clickstationDic["EndString"] as? String ?? "")!
-            print(clickstationDic)
+        let clickstationDic: [String: Any] = stationDic[StationName.title] as? [String : Any] ?? [:]
+        include.stringValue = (clickstationDic["IncludeString"] as? String ?? "111")!
+        exclude.stringValue = (clickstationDic["ExcludeString"] as? String ?? "222")!
+        start.stringValue = (clickstationDic["StartString"] as? String ?? "333")!
+        end.stringValue = (clickstationDic["EndString"] as? String ?? "444")!
+        saveSetting(saveBtn)
+    }
+    
+    func dealwithlog(log: String, path: String){
+        let patharr: Array = path.components(separatedBy: "/")
+        let logname = patharr[patharr.count - 1]
+        
+        if (log.contains("TestResult : PASS ;")) {
+            print(logname)
         }else{
-            print("empty")
+            showmessage(inputString: "Include out:\(logname)")
         }
     }
     
@@ -123,11 +128,15 @@ class ViewController: NSViewController {
     }
     
     @IBAction func cleanInfo(_ sender: NSButton) {
+        showInfo.string = ""
     }
     
     @IBAction func saveSetting(_ sender: NSButton) {
+        stationDic["\(StationName.title)"] = ["IncludeString":"\(include.stringValue)", "ExcludeString":"\(exclude.stringValue)", "StartString":"\(start.stringValue)", "EndString":"\(end.stringValue)"]
+        ConfigPlist["Stations"] = stationDic
+        NSDictionary(dictionary: ConfigPlist).write(toFile: file, atomically: true)
+        //showmessage(inputString: "\(StationName.title) save successful.")
     }
-
 }
 
 extension ViewController: FileDragDelegate {

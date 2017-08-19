@@ -93,9 +93,9 @@
 		<key>Battery3in1</key>
 		<dict>
 			<key>IncludeString</key>
-			<string>TestResult : PASS$</string>
+			<string>TestResult : PASS\\UPTO_PDCA : PASS\\Uppdca: YES</string>
 			<key>ExcludeString</key>
-			<string>TestResult : FAIL</string>
+			<string>TestResult : FAIL\\Uppdca: NO</string>
 			<key>StartString</key>
 			<string></string>
 			<key>EndString</key>
