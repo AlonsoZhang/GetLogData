@@ -88,5 +88,26 @@
 			<string>LASER-ETCH</string>
 		</dict>
 	</dict>
+	<key>Stations</key>
+	<dict>
+		<key>Battery3in1</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>TestResult : PASS$</string>
+			<key>ExcludeString</key>
+			<string>TestResult : FAIL</string>
+			<key>StartString</key>
+			<string></string>
+			<key>EndString</key>
+			<string></string>
+		</dict>
+		<key>RCAM</key>
+		<dict>
+			<key>ExcludeString</key>
+			<string>TestResult : FAIL</string>
+			<key>EndString</key>
+			<string></string>
+		</dict>
+	</dict>
 </dict>
 </plist>

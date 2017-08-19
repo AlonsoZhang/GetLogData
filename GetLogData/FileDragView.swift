@@ -28,13 +28,9 @@ class FileDragView: NSView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //注册文件拖放类型
         self.register(forDraggedTypes: [NSFilenamesPboardType])
     }
     
-    //MARK: NSDraggingDestination
-    
-    //开始拖放，返回拖放类型
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         if (highlight == false) {
             highlight = true
@@ -63,7 +59,6 @@ class FileDragView: NSView {
         self.needsDisplay = true
     }
     
-    //拖放文件进入拖放区，返回拖放操作类型
     override func performDragOperation(_ sender: NSDraggingInfo?)-> Bool {
         let pboard = sender?.draggingPasteboard()
         let dragTypes = pboard!.types! as NSArray
