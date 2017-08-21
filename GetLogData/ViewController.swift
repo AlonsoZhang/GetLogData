@@ -27,14 +27,13 @@ class ViewController: NSViewController {
     var linenameDic = [String: Any]()
     var stationDic = [String: Any]()
     var file = ""
+    var resultarray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dragView.delegate = self
         self.plist.state = 1
         self.csv.state = 0
-        let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true) as NSArray
-        print(paths[0])
         file = Bundle.main.path(forResource:"Config", ofType: "plist")!
         ConfigPlist = NSDictionary(contentsOfFile: file)! as! [String : Any]
         linenameDic = ConfigPlist["AllSations"] as! [String : Any]
@@ -47,13 +46,13 @@ class ViewController: NSViewController {
         }
         clickStation()
     }
-
+    
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
         }
     }
-
+    
     @IBAction func ChooseLine(_ sender: NSPopUpButton) {
         StationName.removeAllItems()
         let stationnameDic: [String: Any] = linenameDic[sender.title] as! [String : Any]
@@ -69,6 +68,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func Outputlog(_ sender: NSButton) {
+        resultarray.removeAll()
         let url = URL(fileURLWithPath: folderPath.stringValue)
         let manager = FileManager.default
         let enumeratorAtPath = manager.enumerator(atPath: url.path)
@@ -109,11 +109,86 @@ class ViewController: NSViewController {
     func dealwithlog(log: String, path: String){
         let patharr: Array = path.components(separatedBy: "/")
         let logname = patharr[patharr.count - 1]
+        let includearr = include.stringValue.components(separatedBy: "||")
+        for containstr in includearr {
+            if log.contains(containstr) {
+                //print(logname)
+            }else{
+                showmessage(inputString: "Include out(\(containstr)):\(logname)")
+                return
+            }
+        }
+        let excludearr = exclude.stringValue.components(separatedBy: "||")
+        for notcontainstr in excludearr {
+            if log.contains(notcontainstr) {
+                showmessage(inputString: "Exclude out(\(notcontainstr)):\(logname)")
+                return
+            }else{
+                //print(logname)
+            }
+        }
+        let startarr = start.stringValue.components(separatedBy: "$")
+        let endarr = end.stringValue.components(separatedBy: "$")
+        if startarr.count != endarr.count {
+            showmessage(inputString: "Start string count (\(startarr.count)) ≠ End string count (\(endarr.count)):\(logname)")
+            return
+        }
+        for endeach in endarr {
+            let endeacharr = endeach.components(separatedBy: "++")
+            if endeacharr.count != 2{
+                showmessage(inputString: "End string ++ format is wrong:\(logname)")
+                return
+            }
+        }
+        for starteach in startarr.enumerated() {
+            let starteacharr = starteach.1.components(separatedBy: "++")
+            if starteacharr.count != 2{
+                showmessage(inputString: "Start string ++ format is wrong:\(logname)")
+                return
+            }
+            //            let startRange = log.range(of: starteacharr[0])
+            //            let endeacharr = endarr[starteach.0].components(separatedBy: "++")
+            //            let endRange = log.range(of: endeacharr[0], options: .backwards, range: nil, locale: nil)
+            //            let searchRange = (startRange?.upperBound)! ..< (endRange?.lowerBound)!
+            //            let result = log.substring(with: searchRange)
+            //            print(result)
+            if let startrange = log.range(of: starteacharr[0]) {
+                var keystring = log.substring(from: startrange.upperBound)
+                let endeacharr = endarr[starteach.0].components(separatedBy: "++")
+                if let endrange = keystring.range(of: endeacharr[0]) {
+                    keystring = keystring.substring(to: endrange.lowerBound)
+                    if startarr.count == 1 {
+                        resultarray.append(keystring)
+                    }
+                }else{
+                    showmessage(inputString: "No End string (\(endeacharr[0])):\(logname)")
+                    return
+                }
+            }else{
+                showmessage(inputString: "No Start string (\(starteacharr[0])):\(logname)")
+                return
+            }
+        }
         
-        if (log.contains("TestResult : PASS ;")) {
-            print(logname)
-        }else{
-            showmessage(inputString: "Include out:\(logname)")
+        if resultarray.count > 0 {
+            let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true) as NSArray
+            let resultDic = ["Source":resultarray]
+            if plist.state == 1 {
+                let creatfile = "\(paths[0])/\(StationName.title).plist"
+                NSDictionary(dictionary: resultDic).write(toFile: creatfile, atomically: true)
+            }else{
+                var csvstring = "Source\n"
+                for eachcsv in resultarray {
+                    csvstring.append("\(eachcsv)\n")
+                }
+                let creatfile = "\(paths[0])/\(StationName.title).csv"
+                do {
+                    try csvstring.write(toFile: creatfile, atomically: true, encoding: String.Encoding.utf8)
+                } catch  {
+                    showmessage(inputString: "Error:\(logname)")
+                    return
+                }
+            }
         }
     }
     
@@ -135,7 +210,6 @@ class ViewController: NSViewController {
         stationDic["\(StationName.title)"] = ["IncludeString":"\(include.stringValue)", "ExcludeString":"\(exclude.stringValue)", "StartString":"\(start.stringValue)", "EndString":"\(end.stringValue)"]
         ConfigPlist["Stations"] = stationDic
         NSDictionary(dictionary: ConfigPlist).write(toFile: file, atomically: true)
-        //showmessage(inputString: "\(StationName.title) save successful.")
     }
 }
 
