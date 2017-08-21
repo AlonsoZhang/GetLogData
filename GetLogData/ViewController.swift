@@ -28,6 +28,7 @@ class ViewController: NSViewController {
     var stationDic = [String: Any]()
     var file = ""
     var resultarray = [String]()
+    var resultDic = [String: Any]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +87,67 @@ class ViewController: NSViewController {
                 showmessage(inputString: "\n========================================\nFolder: \(logpath)")
             }
         }
+        
+        //print(resultDic)
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true) as NSArray
+        let creatfile = "\(paths[0])/\(StationName.title).csv"
+        //NSDictionary(dictionary: resultDic).write(toFile: creatfile, atomically: true)
+        var csvstring = "SN,Query,CheckUOP,Total\n"
+        for eachcsv in resultDic.keys {
+            
+            //print(resultDic[eachcsv])
+            var dic = [String: String]();
+            dic = resultDic[eachcsv]! as! [String : String]
+            
+            let aaa = Float(dic["1"]!)
+            let bbb = Float(dic["0"]!)
+            let eee = Float(dic["3"]!)
+            let fff = Float(dic["2"]!)
+            var ccc = aaa! - bbb!
+            if ccc<0{
+                ccc = ccc+60
+            }
+            var ggg = eee! - fff!
+            if ggg<0 {
+                ggg = ggg+60
+            }
+            
+            let ddd = String(format: "%.3f", ccc)
+            let hhh = String(format: "%.3f", ggg)
+            let iii = ggg+ccc
+            let jjj = String(format: "%.3f", iii)
+            
+            csvstring.append("\(eachcsv),\(ddd),\(hhh),\(jjj)\n")
+//            let calc = Float(eachcsv["1"]-eachcsv["0"]
+        }
+        do {
+            try csvstring.write(toFile: creatfile, atomically: true, encoding: String.Encoding.utf8)
+        } catch  {
+            showmessage(inputString: "Error to write csv")
+            return
+        }
+        
+        if resultarray.count > 0 {
+            let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true) as NSArray
+            let finalDic = ["Source":resultarray]
+            if plist.state == 1 {
+                let creatfile = "\(paths[0])/\(StationName.title).plist"
+                NSDictionary(dictionary: finalDic).write(toFile: creatfile, atomically: true)
+            }else{
+                var csvstring = "Source\n"
+                for eachcsv in resultarray {
+                    csvstring.append("\(eachcsv)\n")
+                }
+                let creatfile = "\(paths[0])/\(StationName.title).csv"
+                do {
+                    try csvstring.write(toFile: creatfile, atomically: true, encoding: String.Encoding.utf8)
+                } catch  {
+                    showmessage(inputString: "Error to write csv")
+                    return
+                }
+            }
+        }
     }
     
     func showmessage(inputString: String) {
@@ -140,25 +202,27 @@ class ViewController: NSViewController {
                 return
             }
         }
+        var middleDic = [String: Any]()
         for starteach in startarr.enumerated() {
             let starteacharr = starteach.1.components(separatedBy: "++")
             if starteacharr.count != 2{
                 showmessage(inputString: "Start string ++ format is wrong:\(logname)")
                 return
             }
-            //            let startRange = log.range(of: starteacharr[0])
-            //            let endeacharr = endarr[starteach.0].components(separatedBy: "++")
-            //            let endRange = log.range(of: endeacharr[0], options: .backwards, range: nil, locale: nil)
-            //            let searchRange = (startRange?.upperBound)! ..< (endRange?.lowerBound)!
-            //            let result = log.substring(with: searchRange)
-            //            print(result)
             if let startrange = log.range(of: starteacharr[0]) {
-                var keystring = log.substring(from: startrange.upperBound)
+                let startoffsetnum = (Int(starteacharr[1]) ?? Int("0"))!
+                let finalstartrange = log.index(startrange.upperBound, offsetBy: startoffsetnum)
+                var keystring = log.substring(from: finalstartrange)
                 let endeacharr = endarr[starteach.0].components(separatedBy: "++")
                 if let endrange = keystring.range(of: endeacharr[0]) {
-                    keystring = keystring.substring(to: endrange.lowerBound)
+                    let endoffsetnum = (Int(endeacharr[1]) ?? Int("0"))!
+                    let finalendrange = keystring.index(endrange.lowerBound, offsetBy: endoffsetnum)
+                    keystring = keystring.substring(to: finalendrange)
                     if startarr.count == 1 {
                         resultarray.append(keystring)
+                    }else{
+                        middleDic["\(starteach.0)"] = keystring
+                        //print(middleDic)
                     }
                 }else{
                     showmessage(inputString: "No End string (\(endeacharr[0])):\(logname)")
@@ -168,27 +232,7 @@ class ViewController: NSViewController {
                 showmessage(inputString: "No Start string (\(starteacharr[0])):\(logname)")
                 return
             }
-        }
-        
-        if resultarray.count > 0 {
-            let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true) as NSArray
-            let resultDic = ["Source":resultarray]
-            if plist.state == 1 {
-                let creatfile = "\(paths[0])/\(StationName.title).plist"
-                NSDictionary(dictionary: resultDic).write(toFile: creatfile, atomically: true)
-            }else{
-                var csvstring = "Source\n"
-                for eachcsv in resultarray {
-                    csvstring.append("\(eachcsv)\n")
-                }
-                let creatfile = "\(paths[0])/\(StationName.title).csv"
-                do {
-                    try csvstring.write(toFile: creatfile, atomically: true, encoding: String.Encoding.utf8)
-                } catch  {
-                    showmessage(inputString: "Error:\(logname)")
-                    return
-                }
-            }
+            resultDic[logname] = middleDic
         }
     }
     

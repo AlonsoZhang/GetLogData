@@ -97,16 +97,20 @@
 			<key>ExcludeString</key>
 			<string>TestResult : FAIL||Uppdca: NO</string>
 			<key>StartString</key>
-			<string>NN.NN:NA:NA:NA:++0</string>
+			<string>SET SN++-14</string>
 			<key>EndString</key>
-			<string>D21.++0</string>
+			<string>SET SN++-2</string>
 		</dict>
-		<key>RCAM</key>
+		<key>MBA</key>
 		<dict>
+			<key>IncludeString</key>
+			<string>D21||Check_UOP||SET SN</string>
 			<key>ExcludeString</key>
-			<string>TestResult : FAIL</string>
+			<string>XXXXX</string>
+			<key>StartString</key>
+			<string>========== Start Test Item [3]++-38$Func Call: AEQuerySFC++-29$SET SN++-14$Func Call : Check_UOP++-29</string>
 			<key>EndString</key>
-			<string></string>
+			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2</string>
 		</dict>
 	</dict>
 </dict>

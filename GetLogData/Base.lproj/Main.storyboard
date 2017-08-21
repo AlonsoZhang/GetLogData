@@ -864,7 +864,7 @@
                                     <constraint firstAttribute="width" constant="30" id="Z5R-ez-vM2"/>
                                     <constraint firstAttribute="height" constant="30" id="sKj-t4-Rrh"/>
                                 </constraints>
-                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="save" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="3M7-wA-XfA">
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="save" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="3M7-wA-XfA">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -878,7 +878,7 @@
                                     <constraint firstAttribute="height" constant="30" id="OoS-gO-VEe"/>
                                     <constraint firstAttribute="width" constant="30" id="XuU-m9-U3U"/>
                                 </constraints>
-                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="clear" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GJW-91-kKO">
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="clear" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="GJW-91-kKO">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
