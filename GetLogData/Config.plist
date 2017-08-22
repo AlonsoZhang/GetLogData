@@ -100,6 +100,47 @@
 			<string>SET SN++-14</string>
 			<key>EndString</key>
 			<string>SET SN++-2</string>
+			<key>LogFormat</key>
+			<string></string>
+		</dict>
+		<key>RCAM</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>D21||Check_UOP||SET SN</string>
+			<key>ExcludeString</key>
+			<string>XXXXX</string>
+			<key>StartString</key>
+			<string>========== Start Test Item [3]++-8$Func Call: AEQuerySFC++-8$SET SN++-8$Func Call : Check_UOP++-8$========== Start Test Item [5]++-8$Func Call: AEQuerySFC++-8$========== Start Test Item [9]++-8$Func Call: AEQuerySFC++-8</string>
+			<key>EndString</key>
+			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2$========== Start Test Item [5]++-2$Func Call: AEQuerySFC++-2$========== Start Test Item [9]++-2$Func Call: AEQuerySFC++-2</string>
+			<key>LogFormat</key>
+			<string></string>
+		</dict>
+		<key>CIM</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>D21||Check_UOP||SET SN</string>
+			<key>ExcludeString</key>
+			<string>XXXXX</string>
+			<key>StartString</key>
+			<string>========== Start Test Item [3]++-8$Func Call: AEQuerySFC++-8$SET SN++-8$Func Call : Check_UOP++-8$========== Start Test Item [5]++-8$Find the parameter [NetworkStatus]++-8$========== Start Test Item [7]++-8$Func Call: MappingListStatus++-8</string>
+			<key>EndString</key>
+			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2$========== Start Test Item [5]++-2$Find the parameter [NetworkStatus]++-2$========== Start Test Item [7]++-2$Func Call: MappingListStatus++-2</string>
+			<key>LogFormat</key>
+			<string></string>
+		</dict>
+		<key>CGS</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>D21||Check_UOP||SET SN</string>
+			<key>ExcludeString</key>
+			<string>XXXXX</string>
+			<key>StartString</key>
+			<string>========== Start Test Item [3]++-8$Func Call: AEQuerySFC++-8$SET SN++-8$Func Call : Check_UOP++-8</string>
+			<key>EndString</key>
+			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2</string>
+			<key>LogFormat</key>
+			<string></string>
 		</dict>
 		<key>MBA</key>
 		<dict>
@@ -108,9 +149,11 @@
 			<key>ExcludeString</key>
 			<string>XXXXX</string>
 			<key>StartString</key>
-			<string>========== Start Test Item [3]++-38$Func Call: AEQuerySFC++-29$SET SN++-14$Func Call : Check_UOP++-29</string>
+			<string>========== Start Test Item [3]++-8$Func Call: AEQuerySFC++-8$SET SN++-8$Func Call : Check_UOP++-8$========== Start Test Item [7]++-8$Func Call: MappingListStatus++-8</string>
 			<key>EndString</key>
-			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2</string>
+			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2$========== Start Test Item [7]++-2$Func Call: MappingListStatus++-2</string>
+			<key>LogFormat</key>
+			<string></string>
 		</dict>
 	</dict>
 </dict>
