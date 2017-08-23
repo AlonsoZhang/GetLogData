@@ -87,6 +87,13 @@
 			<key>LASER-ETCH</key>
 			<string>LASER-ETCH</string>
 		</dict>
+		<key>Temp</key>
+		<dict>
+			<key>Temp1</key>
+			<string>Test1</string>
+			<key>Temp2</key>
+			<string>Test2</string>
+		</dict>
 	</dict>
 	<key>Stations</key>
 	<dict>
@@ -110,11 +117,24 @@
 			<key>ExcludeString</key>
 			<string>XXXXX</string>
 			<key>StartString</key>
-			<string>========== Start Test Item [3]++-8$Func Call: AEQuerySFC++-8$SET SN++-8$Func Call : Check_UOP++-8$========== Start Test Item [5]++-8$Func Call: AEQuerySFC++-8$========== Start Test Item [9]++-8$Func Call: AEQuerySFC++-8</string>
+			<string>Item[3]Query$CheckUOP$Item[5]Query$Item[9]Query</string>
 			<key>EndString</key>
-			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2$========== Start Test Item [5]++-2$Func Call: AEQuerySFC++-2$========== Start Test Item [9]++-2$Func Call: AEQuerySFC++-2</string>
+			<string>Item[3]Query$CheckUOP$Item[5]Query$Item[9]Query</string>
 			<key>LogFormat</key>
-			<string></string>
+			<string>(Query)[0]to[1]$(CheckUOP)[2]to[3]$(QueryEM)[4]to[5]$(QueryBL)[6]to[7]</string>
+		</dict>
+		<key>Temp2</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>D21||Check_UOP||SET SN</string>
+			<key>ExcludeString</key>
+			<string>XXXXX</string>
+			<key>StartString</key>
+			<string>Item[3]Query$CheckUOP$Item[5]Query$Item[9]Query$Duration : ++</string>
+			<key>EndString</key>
+			<string>Item[3]Query$CheckUOP$Item[5]Query$Item[9]Query$s++</string>
+			<key>LogFormat</key>
+			<string>(Query)[0]to[1]$(CheckUOP)[2]to[3]$(QueryEM)[4]to[5]$(QueryBL)[6]to[7]$(Duration)[8]</string>
 		</dict>
 		<key>CIM</key>
 		<dict>
