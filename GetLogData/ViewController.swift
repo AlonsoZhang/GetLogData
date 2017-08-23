@@ -273,7 +273,7 @@ class ViewController: NSViewController {
     
     func writelog() -> Bool {
         var result = true
-        print(resultDic)
+        //print(resultDic)
         let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true) as NSArray
         let creatfile = "\(paths[0])/\(StationName.title).csv"
         let formatstring = tempDic["FormatString"] as? String ?? ""
@@ -293,52 +293,6 @@ class ViewController: NSViewController {
             }
             csvstring.append("\n")
         }
-        
-        
-        //        for eachcsv in resultDic.keys {
-        //
-        //            //print(resultDic[eachcsv])
-        //            var dic = [String: String]();
-        //            dic = resultDic[eachcsv]! as! [String : String]
-        //
-        //            let aaa = Float(dic["1"]!)
-        //            let bbb = Float(dic["0"]!)
-        //            let eee = Float(dic["3"]!)
-        //            let fff = Float(dic["2"]!)
-        //            let num4 = Float(dic["4"] ?? "0")
-        //            let num5 = Float(dic["5"] ?? "0")
-        //            let num6 = Float(dic["6"] ?? "0")
-        //            let num7 = Float(dic["7"] ?? "0")
-        //
-        //            var ccc = aaa! - bbb!
-        //            if ccc<0{
-        //                ccc = ccc+60
-        //            }
-        //            var ggg = eee! - fff!
-        //            if ggg<0 {
-        //                ggg = ggg+60
-        //            }
-        //
-        //            var min = num5! - num4!
-        //            if min < 0 {
-        //                min = min+60
-        //            }
-        //
-        //            var min2 = num7! - num6!
-        //            if min2 < 0 {
-        //                min2 = min2+60
-        //            }
-        //
-        //            let ddd = String(format: "%.3f", ccc)
-        //            let hhh = String(format: "%.3f", ggg)
-        //            let kkk = String(format: "%.3f", min)
-        //            let lll = String(format: "%.3f", min2)
-        //
-        //            //            let iii = ggg+ccc
-        //            //            let jjj = String(format: "%.3f", iii)
-        //
-        //            csvstring.append("\(eachcsv),\(ddd),\(hhh),\(kkk),\(lll)\n")
-        //        }
         do {
             try csvstring.write(toFile: creatfile, atomically: true, encoding: String.Encoding.utf8)
         } catch  {
@@ -375,11 +329,16 @@ class ViewController: NSViewController {
             let stringarr = string.components(separatedBy: "to")
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-//            if stringarr[0] =~  {
-//                <#code#>
-//            }
-            let timeNumber = dateFormatter.date(from: "\(stringarr[1])" )!.timeIntervalSince1970-dateFormatter.date(from: "\(stringarr[0])" )!.timeIntervalSince1970
-            print(timeNumber)
+            var timeNumber = Double()
+            if stringarr[0] =~ "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}$" && stringarr[1] =~ "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}$" {
+                timeNumber = dateFormatter.date(from: "\(stringarr[1])" )!.timeIntervalSince1970-dateFormatter.date(from: "\(stringarr[0])" )!.timeIntervalSince1970
+                finalstring = String(format: "%.3f",timeNumber)
+            }else{
+                finalstring = ""
+                if stringarr[0] != "" || stringarr[1] != "" {
+                    showmessage(inputString: "Date format is error.\(stringarr[0]) to \(stringarr[1])")
+                }
+            }
         }
         return finalstring
     }
@@ -492,6 +451,6 @@ precedencegroup ComparisonPrecedence{
 infix operator =~ : ComparisonPrecedence
 
 func =~ (lhs: String, rhs: String) -> Bool {
-    return MyRegex(rhs).match(input: lhs) //需要前面定义的MyRegex配合
+    return MyRegex(rhs).match(input: lhs)
 }
 
