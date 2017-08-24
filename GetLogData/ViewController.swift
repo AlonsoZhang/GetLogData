@@ -23,20 +23,24 @@ class ViewController: NSViewController {
     @IBOutlet weak var logformat: NSTextField!
     @IBOutlet var showInfo: NSTextView!
     @IBOutlet weak var saveBtn: NSButton!
+    @IBOutlet weak var nouseTF: NSTextField!
+    @IBOutlet weak var processbar: NSProgressIndicator!
+    @IBOutlet weak var processLabel: NSTextField!
+    @IBOutlet weak var scrollview: NSScrollView!
     
     var ConfigPlist = [String: Any]()
     var linenameDic = [String: Any]()
     var stationDic = [String: Any]()
     var file = ""
-    var resultarray = [String]()
     var resultDic = [String: Any]()
     var tempDic = [String:Any]()
+    var outputlogstr = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dragView.delegate = self
-        self.plist.state = 1
-        self.csv.state = 0
+        self.plist.state = 0
+        self.csv.state = 1
         file = Bundle.main.path(forResource:"Config", ofType: "plist")!
         ConfigPlist = NSDictionary(contentsOfFile: file)! as! [String : Any]
         linenameDic = ConfigPlist["AllSations"] as! [String : Any]
@@ -68,7 +72,7 @@ class ViewController: NSViewController {
     
     @IBAction func ChooseStation(_ sender: NSPopUpButton) {
         clickStation()
-        print("select title \(sender.itemTitles[sender.indexOfSelectedItem]) \(sender.title)")
+        //print("select title \(sender.itemTitles[sender.indexOfSelectedItem]) \(sender.title)")
     }
     
     @IBAction func ExtractZip(_ sender: NSButton) {
@@ -77,8 +81,8 @@ class ViewController: NSViewController {
     func clickStation() {
         stationDic = ConfigPlist["Stations"] as! [String : Any]
         let clickstationDic: [String: Any] = stationDic[StationName.title] as? [String : Any] ?? [:]
-        include.stringValue = (clickstationDic["IncludeString"] as? String ?? "TestResult : PASS||Uppdca: YES")!
-        exclude.stringValue = (clickstationDic["ExcludeString"] as? String ?? "TestResult : FAIL||Uppdca: NO")!
+        include.stringValue = (clickstationDic["IncludeString"] as? String ?? "TestResult : PASS$Uppdca: YES")!
+        exclude.stringValue = (clickstationDic["ExcludeString"] as? String ?? "TestResult : FAIL$Uppdca: NO")!
         start.stringValue = (clickstationDic["StartString"] as? String ?? "")!
         end.stringValue = (clickstationDic["EndString"] as? String ?? "")!
         logformat.stringValue = (clickstationDic["LogFormat"] as? String ?? "")!
@@ -106,30 +110,90 @@ class ViewController: NSViewController {
     }
     
     @IBAction func Outputlog(_ sender: NSButton) {
-        resultarray.removeAll()
-        resultDic.removeAll()
-        tempDic.removeAll()
         showInfo.string = ""
-        let url = URL(fileURLWithPath: folderPath.stringValue)
+        var process = 0
+        nouseTF.isHidden = false
+        processbar.isHidden = false
+        processLabel.isHidden = false
+        processbar.doubleValue = 0
+        outputlogstr = String()
+        let url = URL(fileURLWithPath: self.folderPath.stringValue)
         let manager = FileManager.default
-        let enumeratorAtPath = manager.enumerator(atPath: url.path)
-        if checkformat() {
-            for logpath in enumeratorAtPath! {
-                let truepath = "\(folderPath.stringValue)/\(logpath)"
-                let tmpData = NSData.init(contentsOfFile: truepath)
-                if (tmpData != nil) {
-                    let content = String.init(data: tmpData! as Data, encoding: String.Encoding.utf8)
-                    if (content != nil) {
-                        dealwithlog(log: content!, path: logpath as! String)
-                    }else{
-                        showmessage(inputString: "No string: \(logpath)")
+        var enumeratorAtPath = manager.enumerator(atPath: url.path)
+        var num = 0
+        for _ in enumeratorAtPath! {
+            num = num + 1
+        }
+        showmessage(inputString: "File count : \(num)\n")
+        let timer =  DispatchSource.makeTimerSource(flags: [], queue:DispatchQueue.main)
+        timer.scheduleRepeating(deadline: .now(), interval: .milliseconds(1000) ,leeway:.milliseconds(40))
+        timer.setEventHandler {
+            self.showInfo.string = self.outputlogstr
+            if num > 10000{
+                let percent = Double(process)/Double(num)*100
+                self.processLabel.stringValue = String.init(format: "%.1f%%", percent)
+                self.processbar.doubleValue = percent
+            }
+            if let height=self.scrollview.documentView?.bounds.size.height{
+                var diff = height-self.scrollview.documentVisibleRect.height
+                if diff < 0 {
+                    diff = 0
+                }
+                self.scrollview.contentView.scroll(NSMakePoint(0, diff))
+            }
+        }
+        if #available(OSX 10.12, *) {
+            timer.activate()
+        } else {
+            // Fallback on earlier versions
+        }
+        DispatchQueue.global().async {
+            self.resultDic.removeAll()
+            self.tempDic.removeAll()
+            let incrementnum = 100.0/Double(num)
+            enumeratorAtPath = manager.enumerator(atPath: url.path)
+            if self.checkformat() {
+                for logpath in enumeratorAtPath! {
+                    process = process + 1
+                    if num < 10000{
+                        DispatchQueue.main.async {
+                            self.processLabel.stringValue = "\(process)/\(num)"
+                            self.processbar.increment(by: Double(incrementnum))
+                        }
                     }
-                }else{
-                    showmessage(inputString: "\n========================================\nFolder: \(logpath)")
+                    let truepath = "\(self.folderPath.stringValue)/\(logpath)"
+                    let tmpData = NSData.init(contentsOfFile: truepath)
+                    if (tmpData != nil) {
+                        let content = String.init(data: tmpData! as Data, encoding: String.Encoding.utf8)
+                        if (content != nil) {
+                            self.dealwithlog(log: content!, path: logpath as! String)
+                        }else{
+                            self.showmessage(inputString: "No string: \(logpath)")
+                        }
+                    }else{
+                        self.showmessage(inputString: "\n========================================\nFolder: \(logpath)")
+                    }
+                }
+                DispatchQueue.main.async {
+                    timer.cancel()
+                    self.processLabel.stringValue = "Writing Log..."
+                }
+                if self.writelog() {
+                    self.showmessage(inputString: "\n\nFinish search and write log pass!")
                 }
             }
-            if writelog() {
-                showmessage(inputString: "\n\nFinish search and write log pass!")
+            DispatchQueue.main.async {
+                self.nouseTF.isHidden = true
+                self.processbar.isHidden = true
+                self.processLabel.isHidden = true
+                self.showInfo.string = self.outputlogstr
+                if let height=self.scrollview.documentView?.bounds.size.height{
+                    var diff = height-self.scrollview.documentVisibleRect.height
+                    if diff < 0 {
+                        diff = 0
+                    }
+                    self.scrollview.contentView.scroll(NSMakePoint(0, diff))
+                }
             }
         }
     }
@@ -213,14 +277,14 @@ class ViewController: NSViewController {
             tempDic["EndString"] = endstring
             tempDic["TitleArray"] = titlearray
         }
-        print("tempDic:\(tempDic)")
+        showmessage(inputString:"Final data:\nStartString: \(String(describing: tempDic["StartString"]!))\nEndString: \(String(describing: tempDic["EndString"]!))\n")
         return result
     }
     
     func dealwithlog(log: String, path: String){
         let patharr: Array = path.components(separatedBy: "/")
         let logname = patharr[patharr.count - 1]
-        let includearr = include.stringValue.components(separatedBy: "||")
+        let includearr = include.stringValue.components(separatedBy: "$")
         for containstr in includearr {
             if log.contains(containstr)||include.stringValue == "" {
                 //print(logname)
@@ -229,7 +293,7 @@ class ViewController: NSViewController {
                 return
             }
         }
-        let excludearr = exclude.stringValue.components(separatedBy: "||")
+        let excludearr = exclude.stringValue.components(separatedBy: "$")
         for notcontainstr in excludearr {
             if log.contains(notcontainstr) {
                 showmessage(inputString: "Exclude out(\(notcontainstr)):\(logname)")
@@ -253,71 +317,56 @@ class ViewController: NSViewController {
                     let endoffsetnum = (Int(endeacharr[1]) ?? Int("0"))!
                     let finalendrange = logstring.index(endoffsetnum > 0 ? endrange.upperBound : endrange.lowerBound, offsetBy: endoffsetnum)
                     let keystring = logstring.substring(to: finalendrange)
-                    if startarr.count == 1 {
-                        resultarray.append(keystring)
-                    }else{
-                        middleDic["\(starteach.0)"] = keystring
-                        //print(middleDic)
-                    }
+                    middleDic["\(starteach.0)"] = keystring
                 }else{
-                    showmessage(inputString: "No End string (\(endeacharr[0])):\(logname)")
-                    return
+                    //showmessage(inputString: "No End string (\(endeacharr[0])):\(logname)")
+                    //return
                 }
             }else{
-                showmessage(inputString: "No Start string (\(starteacharr[0])):\(logname)")
-                return
+                //showmessage(inputString: "No Start string (\(starteacharr[0])):\(logname)")
+                //return
             }
+            
             resultDic[logname] = middleDic
         }
+        
     }
     
     func writelog() -> Bool {
         var result = true
-        //print(resultDic)
         let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true) as NSArray
-        let creatfile = "\(paths[0])/\(StationName.title).csv"
         let formatstring = tempDic["FormatString"] as? String ?? ""
         var csvstring = "SN"
+        var resultarray = [String]()
         for title in tempDic["TitleArray"] as? [String] ?? [String]() {
             csvstring.append(",\(title)")
         }
         csvstring.append("\n")
         let formatarr = formatstring.components(separatedBy: "$")
-        
         for eachcsv in resultDic.keys {
             csvstring.append(eachcsv)
+            var midstr = String()
             for eachformat in formatarr {
                 let each = regexdealwith(string: eachformat, pattern: "\\[.*?\\]", dict: resultDic[eachcsv] as! [String:Any])
                 let finaleach = calc(string: each)
                 csvstring.append(",\(finaleach)")
+                midstr.append(" \(finaleach)")
             }
+            midstr = midstr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            resultarray.append(midstr)
             csvstring.append("\n")
         }
-        do {
-            try csvstring.write(toFile: creatfile, atomically: true, encoding: String.Encoding.utf8)
-        } catch  {
-            showmessage(inputString: "Error to write csv")
-            result = false
-        }
-        
-        if resultarray.count > 0 {
-            let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true) as NSArray
+        if plist.state == 1 {
             let finalDic = ["Source":resultarray]
-            if plist.state == 1 {
-                let creatfile = "\(paths[0])/\(StationName.title).plist"
-                NSDictionary(dictionary: finalDic).write(toFile: creatfile, atomically: true)
-            }else{
-                var csvstring = "Source\n"
-                for eachcsv in resultarray {
-                    csvstring.append("\(eachcsv)\n")
-                }
-                let creatfile = "\(paths[0])/\(StationName.title).csv"
-                do {
-                    try csvstring.write(toFile: creatfile, atomically: true, encoding: String.Encoding.utf8)
-                } catch  {
-                    showmessage(inputString: "Error to write csv")
-                    result = false
-                }
+            let creatfile = "\(paths[0])/\(StationName.title).plist"
+            NSDictionary(dictionary: finalDic).write(toFile: creatfile, atomically: true)
+        }else{
+            let creatfile = "\(paths[0])/\(StationName.title).csv"
+            do {
+                try csvstring.write(toFile: creatfile, atomically: true, encoding: String.Encoding.utf8)
+            } catch  {
+                showmessage(inputString: "Error to write csv")
+                result = false
             }
         }
         return result
@@ -335,7 +384,7 @@ class ViewController: NSViewController {
                 finalstring = String(format: "%.3f",timeNumber)
             }else{
                 finalstring = ""
-                if stringarr[0] != "" || stringarr[1] != "" {
+                if stringarr[0] != "" && stringarr[1] != "" {
                     showmessage(inputString: "Date format is error.\(stringarr[0]) to \(stringarr[1])")
                 }
             }
@@ -406,10 +455,13 @@ class ViewController: NSViewController {
     }
     
     func showmessage(inputString: String) {
-        if showInfo.string == "" {
-            showInfo.string = inputString
-        }else{
-            showInfo.string = showInfo.string! + "\n\(inputString)"
+        DispatchQueue.main.async {
+            if self.showInfo.string == "" {
+                self.outputlogstr = inputString
+                self.showInfo.string = self.outputlogstr
+            }else{
+                self.outputlogstr = self.outputlogstr + "\n\(inputString)"
+            }
         }
     }
 }

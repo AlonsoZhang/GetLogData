@@ -93,6 +93,8 @@
 			<string>Test1</string>
 			<key>Temp2</key>
 			<string>Test2</string>
+			<key>BatteryToss</key>
+			<string>BatteryToss</string>
 		</dict>
 	</dict>
 	<key>Stations</key>
@@ -100,9 +102,9 @@
 		<key>Battery3in1</key>
 		<dict>
 			<key>IncludeString</key>
-			<string>TestResult : PASS||Uppdca: YES</string>
+			<string>TestResult : PASS$Uppdca: YES</string>
 			<key>ExcludeString</key>
-			<string>TestResult : FAIL||Uppdca: NO</string>
+			<string>TestResult : FAIL$Uppdca: NO</string>
 			<key>StartString</key>
 			<string>SET SN++-14</string>
 			<key>EndString</key>
@@ -113,7 +115,7 @@
 		<key>RCAM</key>
 		<dict>
 			<key>IncludeString</key>
-			<string>D21||Check_UOP||SET SN</string>
+			<string>D21$Check_UOP$SET SN</string>
 			<key>ExcludeString</key>
 			<string>XXXXX</string>
 			<key>StartString</key>
@@ -126,7 +128,7 @@
 		<key>Temp2</key>
 		<dict>
 			<key>IncludeString</key>
-			<string>D21||Check_UOP||SET SN</string>
+			<string>D21$Check_UOP$SET SN</string>
 			<key>ExcludeString</key>
 			<string>XXXXX</string>
 			<key>StartString</key>
@@ -136,10 +138,36 @@
 			<key>LogFormat</key>
 			<string>(Query)[0]to[1]$(CheckUOP)[2]to[3]$(QueryEM)[4]to[5]$(QueryBL)[6]to[7]$(Duration)[8]</string>
 		</dict>
+		<key>Temp1</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>D21$Check_UOP$SET SN</string>
+			<key>ExcludeString</key>
+			<string>XXXXX</string>
+			<key>StartString</key>
+			<string>Item[5]Query$Item[9]Query$Duration : ++</string>
+			<key>EndString</key>
+			<string>Item[5]Query$Item[9]Query$s++</string>
+			<key>LogFormat</key>
+			<string>(QueryEM)[0]to[1]$(QueryBL)[2]to[3]$(Duration)[4]</string>
+		</dict>
+		<key>BatteryToss</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>ToAddAttribute:Battery</string>
+			<key>ExcludeString</key>
+			<string>XXXXX</string>
+			<key>StartString</key>
+			<string>Battery_Toss_1_SN , ++$Battery_Toss_2_SN , ++$Battery_Toss_3_SN , ++</string>
+			<key>EndString</key>
+			<string>.++$.++$.++</string>
+			<key>LogFormat</key>
+			<string>(Battery_Toss_1_SN)[0]$(Battery_Toss_2_SN)[1]$(Battery_Toss_3_SN)[2]</string>
+		</dict>
 		<key>CIM</key>
 		<dict>
 			<key>IncludeString</key>
-			<string>D21||Check_UOP||SET SN</string>
+			<string>D21$Check_UOP$SET SN</string>
 			<key>ExcludeString</key>
 			<string>XXXXX</string>
 			<key>StartString</key>
@@ -152,7 +180,7 @@
 		<key>CGS</key>
 		<dict>
 			<key>IncludeString</key>
-			<string>D21||Check_UOP||SET SN</string>
+			<string>D21$Check_UOP$SET SN</string>
 			<key>ExcludeString</key>
 			<string>XXXXX</string>
 			<key>StartString</key>
@@ -165,7 +193,7 @@
 		<key>MBA</key>
 		<dict>
 			<key>IncludeString</key>
-			<string>D21||Check_UOP||SET SN</string>
+			<string>D21$Check_UOP$SET SN</string>
 			<key>ExcludeString</key>
 			<string>XXXXX</string>
 			<key>StartString</key>
