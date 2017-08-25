@@ -13,6 +13,8 @@
 		E207978C1F467C5B003F3202 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E207978B1F467C5B003F3202 /* Config.plist */; };
 		E20797921F46EF2A003F3202 /* FileDragView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20797911F46EF2A003F3202 /* FileDragView.swift */; };
 		E2DCE17B1F480D4F004BDAD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2DCE17A1F480D4F004BDAD0 /* Assets.xcassets */; };
+		E2F239F91F4FA8B700DD5055 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F239F81F4FA8B700DD5055 /* WebViewController.swift */; };
+		E2F239FB1F4FAFF800DD5055 /* SW.html in Resources */ = {isa = PBXBuildFile; fileRef = E2F239FA1F4FAFF800DD5055 /* SW.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		E207978B1F467C5B003F3202 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		E20797911F46EF2A003F3202 /* FileDragView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDragView.swift; sourceTree = "<group>"; };
 		E2DCE17A1F480D4F004BDAD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E2F239F81F4FA8B700DD5055 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		E2F239FA1F4FAFF800DD5055 /* SW.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SW.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 				E207977C1F46719A003F3202 /* AppDelegate.swift */,
 				E207977E1F46719A003F3202 /* ViewController.swift */,
 				E20797911F46EF2A003F3202 /* FileDragView.swift */,
+				E2F239F81F4FA8B700DD5055 /* WebViewController.swift */,
+				E2F239FA1F4FAFF800DD5055 /* SW.html */,
 				E2DCE17A1F480D4F004BDAD0 /* Assets.xcassets */,
 				E20797821F46719A003F3202 /* Main.storyboard */,
 				E207978B1F467C5B003F3202 /* Config.plist */,
@@ -128,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2F239FB1F4FAFF800DD5055 /* SW.html in Resources */,
 				E207978C1F467C5B003F3202 /* Config.plist in Resources */,
 				E2DCE17B1F480D4F004BDAD0 /* Assets.xcassets in Resources */,
 				E20797841F46719A003F3202 /* Main.storyboard in Resources */,
@@ -144,6 +151,7 @@
 				E20797921F46EF2A003F3202 /* FileDragView.swift in Sources */,
 				E207977F1F46719A003F3202 /* ViewController.swift in Sources */,
 				E207977D1F46719A003F3202 /* AppDelegate.swift in Sources */,
+				E2F239F91F4FA8B700DD5055 /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +210,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -246,7 +254,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

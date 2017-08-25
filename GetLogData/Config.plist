@@ -90,47 +90,25 @@
 		<key>Temp</key>
 		<dict>
 			<key>Temp1</key>
-			<string>Test1</string>
+			<string>Temp1</string>
 			<key>Temp2</key>
-			<string>Test2</string>
-			<key>BatteryToss</key>
-			<string>BatteryToss</string>
+			<string>Temp2</string>
+			<key>Temp3</key>
+			<string>Temp3</string>
+			<key>Temp4</key>
+			<string>Temp4</string>
+			<key>Temp5</key>
+			<string>Temp5</string>
 		</dict>
 	</dict>
 	<key>Stations</key>
 	<dict>
-		<key>Battery3in1</key>
-		<dict>
-			<key>IncludeString</key>
-			<string>TestResult : PASS$Uppdca: YES</string>
-			<key>ExcludeString</key>
-			<string>TestResult : FAIL$Uppdca: NO</string>
-			<key>StartString</key>
-			<string>SET SN++-14</string>
-			<key>EndString</key>
-			<string>SET SN++-2</string>
-			<key>LogFormat</key>
-			<string></string>
-		</dict>
 		<key>RCAM</key>
 		<dict>
 			<key>IncludeString</key>
 			<string>D21$Check_UOP$SET SN</string>
 			<key>ExcludeString</key>
-			<string>XXXXX</string>
-			<key>StartString</key>
-			<string>Item[3]Query$CheckUOP$Item[5]Query$Item[9]Query</string>
-			<key>EndString</key>
-			<string>Item[3]Query$CheckUOP$Item[5]Query$Item[9]Query</string>
-			<key>LogFormat</key>
-			<string>(Query)[0]to[1]$(CheckUOP)[2]to[3]$(QueryEM)[4]to[5]$(QueryBL)[6]to[7]</string>
-		</dict>
-		<key>Temp2</key>
-		<dict>
-			<key>IncludeString</key>
-			<string>D21$Check_UOP$SET SN</string>
-			<key>ExcludeString</key>
-			<string>XXXXX</string>
+			<string></string>
 			<key>StartString</key>
 			<string>Item[3]Query$CheckUOP$Item[5]Query$Item[9]Query$Duration : ++</string>
 			<key>EndString</key>
@@ -138,70 +116,31 @@
 			<key>LogFormat</key>
 			<string>(Query)[0]to[1]$(CheckUOP)[2]to[3]$(QueryEM)[4]to[5]$(QueryBL)[6]to[7]$(Duration)[8]</string>
 		</dict>
-		<key>Temp1</key>
+		<key>CGS</key>
 		<dict>
 			<key>IncludeString</key>
-			<string>D21$Check_UOP$SET SN</string>
+			<string>TestResult : PASS$Uppdca: YES</string>
 			<key>ExcludeString</key>
-			<string>XXXXX</string>
+			<string>TestResult : FAIL$Uppdca: NO</string>
 			<key>StartString</key>
-			<string>Item[5]Query$Item[9]Query$Duration : ++</string>
+			<string>NN.NN:++</string>
 			<key>EndString</key>
-			<string>Item[5]Query$Item[9]Query$s++</string>
+			<string>D21.++</string>
 			<key>LogFormat</key>
-			<string>(QueryEM)[0]to[1]$(QueryBL)[2]to[3]$(Duration)[4]</string>
+			<string>(Source)[0]</string>
 		</dict>
-		<key>BatteryToss</key>
+		<key>Battery3in1</key>
 		<dict>
 			<key>IncludeString</key>
 			<string>ToAddAttribute:Battery</string>
 			<key>ExcludeString</key>
-			<string>XXXXX</string>
+			<string></string>
 			<key>StartString</key>
 			<string>Battery_Toss_1_SN , ++$Battery_Toss_2_SN , ++$Battery_Toss_3_SN , ++</string>
 			<key>EndString</key>
 			<string>.++$.++$.++</string>
 			<key>LogFormat</key>
 			<string>(Battery_Toss_1_SN)[0]$(Battery_Toss_2_SN)[1]$(Battery_Toss_3_SN)[2]</string>
-		</dict>
-		<key>CIM</key>
-		<dict>
-			<key>IncludeString</key>
-			<string>D21$Check_UOP$SET SN</string>
-			<key>ExcludeString</key>
-			<string>XXXXX</string>
-			<key>StartString</key>
-			<string>========== Start Test Item [3]++-8$Func Call: AEQuerySFC++-8$SET SN++-8$Func Call : Check_UOP++-8$========== Start Test Item [5]++-8$Find the parameter [NetworkStatus]++-8$========== Start Test Item [7]++-8$Func Call: MappingListStatus++-8</string>
-			<key>EndString</key>
-			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2$========== Start Test Item [5]++-2$Find the parameter [NetworkStatus]++-2$========== Start Test Item [7]++-2$Func Call: MappingListStatus++-2</string>
-			<key>LogFormat</key>
-			<string></string>
-		</dict>
-		<key>CGS</key>
-		<dict>
-			<key>IncludeString</key>
-			<string>D21$Check_UOP$SET SN</string>
-			<key>ExcludeString</key>
-			<string>XXXXX</string>
-			<key>StartString</key>
-			<string>========== Start Test Item [3]++-8$Func Call: AEQuerySFC++-8$SET SN++-8$Func Call : Check_UOP++-8</string>
-			<key>EndString</key>
-			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2</string>
-			<key>LogFormat</key>
-			<string></string>
-		</dict>
-		<key>MBA</key>
-		<dict>
-			<key>IncludeString</key>
-			<string>D21$Check_UOP$SET SN</string>
-			<key>ExcludeString</key>
-			<string>XXXXX</string>
-			<key>StartString</key>
-			<string>========== Start Test Item [3]++-8$Func Call: AEQuerySFC++-8$SET SN++-8$Func Call : Check_UOP++-8$========== Start Test Item [7]++-8$Func Call: MappingListStatus++-8</string>
-			<key>EndString</key>
-			<string>========== Start Test Item [3]++-2$Func Call: AEQuerySFC++-2$SET SN++-2$Func Call : Check_UOP++-2$========== Start Test Item [7]++-2$Func Call: MappingListStatus++-2</string>
-			<key>LogFormat</key>
-			<string></string>
 		</dict>
 	</dict>
 </dict>

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="12121"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -700,8 +701,8 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OEB-nI-3Ey">
-                                <rect key="frame" x="98" y="463" width="173" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="/Users/alonso/Desktop/BTY" placeholderString="Please drug log folder to here" id="d2S-Wi-Hbe">
+                                <rect key="frame" x="98" y="463" width="184" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" placeholderString="Please drug log folder to here" id="d2S-Wi-Hbe">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -972,6 +973,16 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lob-sG-e2n">
+                                <rect key="frame" x="357" y="456" width="25" height="25"/>
+                                <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="o0N-Km-UFZ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <segue destination="84R-tP-XxO" kind="popover" popoverAnchorView="Lob-sG-e2n" popoverBehavior="t" preferredEdge="maxX" id="SsM-oW-OGb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="fo0-2v-2X1" firstAttribute="centerY" secondItem="CqC-b5-vTC" secondAttribute="centerY" id="0Vv-Eo-ut8"/>
@@ -1010,6 +1021,7 @@
                             <constraint firstAttribute="trailing" secondItem="AlO-ge-rD1" secondAttribute="trailing" constant="20" id="Xhz-p4-tES"/>
                             <constraint firstItem="diK-AO-bcQ" firstAttribute="top" secondItem="JFl-bN-qGX" secondAttribute="bottom" constant="5" id="Y19-cD-PdR"/>
                             <constraint firstItem="fo0-2v-2X1" firstAttribute="leading" secondItem="CqC-b5-vTC" secondAttribute="trailing" constant="5" id="YS0-fm-CYJ"/>
+                            <constraint firstItem="Lob-sG-e2n" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="ZH8-i1-n5D"/>
                             <constraint firstItem="xQq-xr-6Fh" firstAttribute="leading" secondItem="gRx-rH-9bQ" secondAttribute="trailing" constant="30" id="bpV-hl-ouR"/>
                             <constraint firstItem="nTC-6F-TrE" firstAttribute="centerY" secondItem="dLK-hh-Dlb" secondAttribute="centerY" id="c9S-yL-n7R"/>
                             <constraint firstItem="cYv-vn-jPj" firstAttribute="leading" secondItem="Chs-vo-02y" secondAttribute="trailing" constant="5" id="cYn-by-Sjz"/>
@@ -1022,6 +1034,7 @@
                             <constraint firstItem="OEB-nI-3Ey" firstAttribute="centerY" secondItem="U3x-Ff-HWe" secondAttribute="centerY" id="ffW-Yw-ldI"/>
                             <constraint firstItem="gRx-rH-9bQ" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="gJa-Ph-e1V"/>
                             <constraint firstItem="OEB-nI-3Ey" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="gfN-Uq-9w7"/>
+                            <constraint firstAttribute="trailing" secondItem="Lob-sG-e2n" secondAttribute="trailing" constant="20" id="iTh-7H-MWR"/>
                             <constraint firstItem="aW1-3y-fZg" firstAttribute="leading" secondItem="e9i-Ec-cS9" secondAttribute="trailing" constant="5" id="jM0-T9-wnW"/>
                             <constraint firstAttribute="trailing" secondItem="d0h-4U-K6g" secondAttribute="trailing" constant="20" id="k1O-Tt-W7u"/>
                             <constraint firstAttribute="trailing" secondItem="iY4-Sx-eA3" secondAttribute="trailing" constant="20" id="knl-Kx-PaA"/>
@@ -1064,6 +1077,40 @@
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="897"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="JEV-lx-BJ6">
+            <objects>
+                <viewController id="84R-tP-XxO" customClass="WebViewController" customModule="GetLogData" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Wyo-bz-iz0">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Plp-Q2-hau">
+                                <rect key="frame" x="20" y="20" width="360" height="360"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="360" id="8gb-Er-bJJ"/>
+                                </constraints>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Plp-Q2-hau" secondAttribute="bottom" constant="20" id="JX1-sd-A2V"/>
+                            <constraint firstItem="Plp-Q2-hau" firstAttribute="top" secondItem="Wyo-bz-iz0" secondAttribute="top" constant="20" id="bDl-Y9-QIs"/>
+                            <constraint firstItem="Plp-Q2-hau" firstAttribute="leading" secondItem="Wyo-bz-iz0" secondAttribute="leading" constant="20" id="hod-wG-Tsq"/>
+                            <constraint firstAttribute="trailing" secondItem="Plp-Q2-hau" secondAttribute="trailing" constant="20" id="oHE-wb-lC4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="helpWeb" destination="Plp-Q2-hau" id="MFp-bq-e7Z"/>
+                    </connections>
+                </viewController>
+                <customObject id="RP7-df-KGR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="585.5" y="897"/>
         </scene>
     </scenes>
     <resources>

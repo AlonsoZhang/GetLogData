@@ -52,6 +52,7 @@ class ViewController: NSViewController {
         for stationname in stationnameDic.keys {
             StationName.addItem(withTitle: stationname)
         }
+        StationName.title = "Temp1"
         clickStation()
     }
     
@@ -76,6 +77,50 @@ class ViewController: NSViewController {
     }
     
     @IBAction func ExtractZip(_ sender: NSButton) {
+        showInfo.string = ""
+        if self.folderPath.stringValue == "" {
+            showmessage(inputString: "Please drug log folder to here")
+            return
+        }
+        nouseTF.isHidden = false
+        processbar.isHidden = false
+        processLabel.isHidden = false
+        processbar.doubleValue = 0
+        self.processLabel.stringValue = "Start Unzip log"
+        let url = URL(fileURLWithPath: self.folderPath.stringValue)
+        let manager = FileManager.default
+        var enumeratorAtPath = manager.enumerator(atPath: url.path)
+        var num = 0
+        var process = 0
+        for logpath in enumeratorAtPath! {
+            if (logpath as AnyObject).hasSuffix(".zip") {
+                num = num + 1
+            }
+        }
+        DispatchQueue.global().async {
+            let incrementnum = 100.0/Double(num)
+            enumeratorAtPath = manager.enumerator(atPath: url.path)
+            for logpath in enumeratorAtPath! {
+                let truepath = "\(self.folderPath.stringValue)/\(logpath)"
+                if truepath.hasSuffix(".zip"){
+                    process = process + 1
+                    DispatchQueue.main.async {
+                        self.processLabel.stringValue = "\(process)/\(num)"
+                        self.processbar.increment(by: Double(incrementnum))
+                    }
+                    let endRange = truepath.range(of: ".zip", options: .backwards, range: nil, locale: nil)
+                    let folderpath = truepath.substring(to: (endRange?.lowerBound)!)
+                    self.run(cmd: "unzip \(truepath) -d \(folderpath)")
+                    self.run(cmd: "rm -rf \(truepath)")
+                }
+            }
+            self.showmessage(inputString: "Unzip \(process) files")
+            DispatchQueue.main.async {
+                self.nouseTF.isHidden = true
+                self.processbar.isHidden = true
+                self.processLabel.isHidden = true
+            }
+        }
     }
     
     func clickStation() {
@@ -85,7 +130,7 @@ class ViewController: NSViewController {
         exclude.stringValue = (clickstationDic["ExcludeString"] as? String ?? "TestResult : FAIL$Uppdca: NO")!
         start.stringValue = (clickstationDic["StartString"] as? String ?? "")!
         end.stringValue = (clickstationDic["EndString"] as? String ?? "")!
-        logformat.stringValue = (clickstationDic["LogFormat"] as? String ?? "")!
+        logformat.stringValue = (clickstationDic["LogFormat"] as? String ?? "()")!
         saveSetting(saveBtn)
     }
     
@@ -111,6 +156,10 @@ class ViewController: NSViewController {
     
     @IBAction func Outputlog(_ sender: NSButton) {
         showInfo.string = ""
+        if self.folderPath.stringValue == "" {
+            showmessage(inputString: "Please drug log folder to here")
+            return
+        }
         var process = 0
         nouseTF.isHidden = false
         processbar.isHidden = false
@@ -276,8 +325,8 @@ class ViewController: NSViewController {
             tempDic["StartString"] = startstring
             tempDic["EndString"] = endstring
             tempDic["TitleArray"] = titlearray
+            showmessage(inputString:"Final data:\nStartString: \(String(describing: tempDic["StartString"]!))\nEndString: \(String(describing: tempDic["EndString"]!))\nFormatString: \(String(describing: tempDic["FormatString"]!))\nTitleArray: \(String(describing: tempDic["TitleArray"]!))")
         }
-        showmessage(inputString:"Final data:\nStartString: \(String(describing: tempDic["StartString"]!))\nEndString: \(String(describing: tempDic["EndString"]!))\n")
         return result
     }
     
@@ -320,16 +369,18 @@ class ViewController: NSViewController {
                     middleDic["\(starteach.0)"] = keystring
                 }else{
                     //showmessage(inputString: "No End string (\(endeacharr[0])):\(logname)")
-                    //return
+                    if plist.state == 1{
+                        return
+                    }
                 }
             }else{
                 //showmessage(inputString: "No Start string (\(starteacharr[0])):\(logname)")
-                //return
+                if plist.state == 1{
+                    return
+                }
             }
-            
             resultDic[logname] = middleDic
         }
-        
     }
     
     func writelog() -> Bool {
@@ -462,6 +513,14 @@ class ViewController: NSViewController {
             }else{
                 self.outputlogstr = self.outputlogstr + "\n\(inputString)"
             }
+        }
+    }
+    
+    func run(cmd:String) {
+        var error: NSDictionary?
+        NSAppleScript(source: "do shell script \"\(cmd)\"")!.executeAndReturnError(&error)
+        if error != nil {
+            showmessage(inputString: "\(String(describing: error))")
         }
     }
 }
