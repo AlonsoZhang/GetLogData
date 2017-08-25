@@ -701,7 +701,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OEB-nI-3Ey">
-                                <rect key="frame" x="98" y="463" width="184" height="17"/>
+                                <rect key="frame" x="98" y="463" width="258" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" placeholderString="Please drug log folder to here" id="d2S-Wi-Hbe">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -975,6 +975,10 @@
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lob-sG-e2n">
                                 <rect key="frame" x="357" y="456" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Ble-Lb-IXh"/>
+                                    <constraint firstAttribute="width" constant="21" id="tw5-vQ-vwq"/>
+                                </constraints>
                                 <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="o0N-Km-UFZ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1052,6 +1056,7 @@
                             <constraint firstItem="VUA-ya-TqL" firstAttribute="top" secondItem="gRx-rH-9bQ" secondAttribute="bottom" constant="15" id="ysQ-zK-R9W"/>
                             <constraint firstItem="AlO-ge-rD1" firstAttribute="top" secondItem="JFl-bN-qGX" secondAttribute="bottom" constant="15" id="zMf-Fo-ps5"/>
                             <constraint firstItem="e9i-Ec-cS9" firstAttribute="top" secondItem="dLK-hh-Dlb" secondAttribute="bottom" constant="20" id="zSU-fq-pi0"/>
+                            <constraint firstItem="Lob-sG-e2n" firstAttribute="leading" secondItem="OEB-nI-3Ey" secondAttribute="trailing" constant="5" id="zU5-Jf-Jcd"/>
                         </constraints>
                     </view>
                     <connections>

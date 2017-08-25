@@ -407,12 +407,14 @@ class ViewController: NSViewController {
             resultarray.append(midstr)
             csvstring.append("\n")
         }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
         if plist.state == 1 {
             let finalDic = ["Source":resultarray]
-            let creatfile = "\(paths[0])/\(StationName.title).plist"
+            let creatfile = "\(paths[0])/\(dateFormatter.string(from: Date()))\(StationName.title).plist"
             NSDictionary(dictionary: finalDic).write(toFile: creatfile, atomically: true)
         }else{
-            let creatfile = "\(paths[0])/\(StationName.title).csv"
+            let creatfile = "\(paths[0])/\(dateFormatter.string(from: Date()))\(StationName.title).csv"
             do {
                 try csvstring.write(toFile: creatfile, atomically: true, encoding: String.Encoding.utf8)
             } catch  {
