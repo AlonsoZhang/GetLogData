@@ -24,8 +24,9 @@ h2 { text-align: center; color: rgb(96, 30, 0); font: 10px "Menlo";font-weight: 
 <p>4. Start和End为搜索定位条件</p>
 
 <ul>
-    <li>Start和End框一一对应，将Start和End定位截取的字符串，多个条件用"$"分隔开</li>
+    <li>Start和End框一一对应，通过Start和End定位截取字符串，多个条件用"$"分隔开</li>
     <li>单个条件以"++"分隔，前面为搜索关键字，后面为定位，（如 start中填"Duration++3"，end中填"s++"，则会在log"Duration : 2.789s"中截取到2.789），"++"之后的写负数则会先减去关键词本身的长度再做定位</li>
+    <li>Start存在多个条件时必须按log内先后顺序进行排列</li>
     <li>每个条件在Format中以下标定位，从0开始</li>
     <li>特殊关键词占两个下标，具体格式见5</li>
 </ul>

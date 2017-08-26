@@ -427,18 +427,24 @@ class ViewController: NSViewController {
     
     func calc(string:String) -> String {
         var finalstring = string
+        
         if string.contains("to") {
             let stringarr = string.components(separatedBy: "to")
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
             var timeNumber = Double()
-            if stringarr[0] =~ "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}$" && stringarr[1] =~ "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}$" {
+            let regexstr = "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}$"
+            if stringarr[0] =~ regexstr && stringarr[1] =~ regexstr {
                 timeNumber = dateFormatter.date(from: "\(stringarr[1])" )!.timeIntervalSince1970-dateFormatter.date(from: "\(stringarr[0])" )!.timeIntervalSince1970
                 finalstring = String(format: "%.3f",timeNumber)
             }else{
-                finalstring = ""
-                if stringarr[0] != "" && stringarr[1] != "" {
-                    showmessage(inputString: "Date format is error.\(stringarr[0]) to \(stringarr[1])")
+                if stringarr[0] =~ regexstr || stringarr[1] =~ regexstr {
+                    finalstring = ""
+                    if stringarr[0] != "" && stringarr[1] != "" {
+                        showmessage(inputString: "Date format is error.\(stringarr[0]) to \(stringarr[1])")
+                    }
+                }else if string == "to"{
+                    finalstring = ""
                 }
             }
         }
