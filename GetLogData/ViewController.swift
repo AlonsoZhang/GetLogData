@@ -404,7 +404,9 @@ class ViewController: NSViewController {
                 midstr.append(" \(finaleach)")
             }
             midstr = midstr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            resultarray.append(midstr)
+            if midstr != "" {
+                resultarray.append(midstr)
+            }
             csvstring.append("\n")
         }
         let dateFormatter = DateFormatter()
