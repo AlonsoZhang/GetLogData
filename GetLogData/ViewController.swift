@@ -47,12 +47,13 @@ class ViewController: NSViewController {
         for linename in linenameDic.keys {
             LineName.addItem(withTitle: linename)
         }
-        LineName.title = "Temp"
+        LineName.title = "LINE1"
+        print(linenameDic)
         let stationnameDic: [String: Any] = linenameDic[LineName.title] as! [String : Any]
         for stationname in stationnameDic.keys {
             StationName.addItem(withTitle: stationname)
         }
-        StationName.title = "Temp1"
+        StationName.title = "exTemp1"
         clickStation()
     }
     
@@ -482,7 +483,7 @@ class ViewController: NSViewController {
         do {
             var stringArray = [String]();
             let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
-            let res = regex.matches(in: str, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, str.characters.count))
+            let res = regex.matches(in: str, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, str.count))
             for checkingRes in res
             {
                 let tmp = (str as NSString).substring(with: checkingRes.range)
@@ -501,7 +502,7 @@ class ViewController: NSViewController {
     {
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
-            let res = regex.firstMatch(in: str, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, str.characters.count))
+            let res = regex.firstMatch(in: str, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, str.count))
             if let checkingRes = res
             {
                 return ((str as NSString).substring(with: checkingRes.range)).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)

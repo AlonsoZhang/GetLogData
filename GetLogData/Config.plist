@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllSations</key>
+	<dict>
+		<key>LINE1</key>
+		<dict>
+			<key>exTemp1</key>
+			<string>Temp1</string>
+			<key>exTemp2</key>
+			<string>Temp2</string>
+			<key>exTemp3</key>
+			<string>Temp3</string>
+		</dict>
+		<key>LINE2</key>
+		<dict>
+			<key>exTemp4</key>
+			<string>Temp4</string>
+			<key>exTemp5</key>
+			<string>Temp5</string>
+			<key>exTemp6</key>
+			<string>Temp6</string>
+		</dict>
+	</dict>
+	<key>Stations</key>
+	<dict>
+		<key>exTemp5</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>D21$Check_UOP$SET SN</string>
+			<key>ExcludeString</key>
+			<string></string>
+			<key>StartString</key>
+			<string>Item[3]Query$CheckUOP$Item[5]Query$Item[9]Query$Duration : ++</string>
+			<key>EndString</key>
+			<string>Item[3]Query$CheckUOP$Item[5]Query$Item[9]Query$s++</string>
+			<key>LogFormat</key>
+			<string>(Query)[0]to[1]$(CheckUOP)[2]to[3]$(QueryEM)[4]to[5]$(QueryBL)[6]to[7]$(Duration)[8]</string>
+		</dict>
+		<key>exTemp6</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>N66$Duration$TestResult : PASS$WIKS_B03-2FA-24_</string>
+			<key>ExcludeString</key>
+			<string></string>
+			<key>StartString</key>
+			<string>[++$tsid::WIKS_B03-2FA-24_++$Duration : Spend Time: ++</string>
+			<key>EndString</key>
+			<string>]++$RCAM++-1$ Sec.s++</string>
+			<key>LogFormat</key>
+			<string>(Time)[0]$(Station)[1]$(Duration)[2]</string>
+		</dict>
+		<key>exTemp2</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>TVK2_reflowstatus</string>
+			<key>ExcludeString</key>
+			<string>TVK2_reflowstatus=1</string>
+			<key>StartString</key>
+			<string>TVK2_reflowstatus++$TVK2_reflowstatus++</string>
+			<key>EndString</key>
+			<string>:++$[++</string>
+			<key>LogFormat</key>
+			<string>(1)[0]$(2)[1]</string>
+		</dict>
+		<key>exTemp4</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>TestResult : $Uppdca: NO$CheckFilePath</string>
+			<key>ExcludeString</key>
+			<string></string>
+			<key>StartString</key>
+			<string>The file not exist in++</string>
+			<key>EndString</key>
+			<string>[2018++</string>
+			<key>LogFormat</key>
+			<string>(The file not exist in)[0]</string>
+		</dict>
+		<key>exTemp1</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>D21$Check_UOP$SET SN</string>
+			<key>ExcludeString</key>
+			<string></string>
+			<key>StartString</key>
+			<string>Item[3]Query$CheckUOP</string>
+			<key>EndString</key>
+			<string>Item[3]Query$CheckUOP</string>
+			<key>LogFormat</key>
+			<string>(Query)[0]to[1]$(CheckUOP)[2]to[3]</string>
+		</dict>
+		<key>exTemp3</key>
+		<dict>
+			<key>IncludeString</key>
+			<string>TestResult : PASS$Uppdca: YES$1:0:201709$AutoGRR_Flag:0</string>
+			<key>ExcludeString</key>
+			<string>TestResult : FAIL$Uppdca: NO</string>
+			<key>StartString</key>
+			<string>-01.04:++$201709++9</string>
+			<key>EndString</key>
+			<string>:201709++$:201709++</string>
+			<key>LogFormat</key>
+			<string>(Source)[0][NowTime][1]:0:0:</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
